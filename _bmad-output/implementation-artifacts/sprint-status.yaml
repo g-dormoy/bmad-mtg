@@ -1,0 +1,86 @@
+# generated: 2026-02-01
+# project: mtg
+# project_key: mtg
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-02-01
+project: mtg
+project_key: mtg
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  # Epic 1: App Foundation
+  epic-1: in-progress
+  1-1-initialize-project-from-starter-template: in-progress
+  1-2-set-up-database-with-cards-table: backlog
+  1-3-create-app-shell-with-bottom-navigation: backlog
+  1-4-apply-dark-theme-with-mtg-colors: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: Card Scanning
+  epic-2: backlog
+  2-1-camera-viewfinder-with-frame-overlay: backlog
+  2-2-ocr-text-extraction-service: backlog
+  2-3-scryfall-api-integration: backlog
+  2-4-automatic-card-recognition: backlog
+  2-5-scan-result-overlay: backlog
+  2-6-add-card-to-collection: backlog
+  2-7-duplicate-detection-display: backlog
+  2-8-session-counter: backlog
+  2-9-session-summary: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Collection Browsing
+  epic-3: backlog
+  3-1-collection-grid-view: backlog
+  3-2-collection-list-view: backlog
+  3-3-collection-count-display: backlog
+  3-4-search-by-card-name: backlog
+  3-5-filter-by-color: backlog
+  3-6-filter-by-card-type: backlog
+  3-7-filter-by-mana-cost: backlog
+  3-8-filter-by-set: backlog
+  3-9-combined-multi-filter-support: backlog
+  3-10-clear-all-filters: backlog
+  3-11-offline-browsing: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Card Details
+  epic-4: backlog
+  4-1-navigate-to-card-detail: backlog
+  4-2-card-image-display: backlog
+  4-3-card-metadata-display: backlog
+  4-4-return-to-collection: backlog
+  4-5-swipe-between-cards: backlog
+  epic-4-retrospective: optional
