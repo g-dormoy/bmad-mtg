@@ -95,7 +95,7 @@ This document provides the complete epic and story breakdown for mtg, decomposin
 - Snake_case file naming, PascalCase class naming
 
 **From Architecture - Database Schema:**
-- Cards table: id, scryfall_id, name, type, mana_cost, colors, set_code, image_path, quantity, created_at
+- Cards table: id, scryfall_id, name, type, oracle_text, mana_cost, colors, set_code, image_path, quantity, created_at
 - Indexes on: name, colors, type, set_code, mana_cost
 
 **From UX Design - Visual & Interaction:**

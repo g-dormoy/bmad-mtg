@@ -165,7 +165,7 @@ flutter pub get
 | Data Models | Freezed | From starter | Immutable classes with JSON serialization, works with Drift |
 
 **Database Schema Approach:**
-- Cards table: id, scryfall_id, name, type, mana_cost, colors, set_code, image_path, quantity, created_at
+- Cards table: id, scryfall_id, name, type, oracle_text, mana_cost, colors, set_code, image_path, quantity, created_at
 - Indexes on: name, colors, type, set_code, mana_cost (for fast filtering)
 
 ### Authentication & Security
