@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mtg/feature/collection/screens/collection_screen.dart';
+import 'package:mtg/feature/scanning/providers/camera_permission_provider.dart';
 import 'package:mtg/feature/scanning/screens/scan_screen.dart';
 import 'package:mtg/shared/widget/scaffold_with_bottom_nav.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 /// Helper to create a GoRouter with StatefulShellRoute for testing.
 GoRouter createTestRouter({String initialLocation = '/scan'}) {
@@ -37,14 +40,38 @@ GoRouter createTestRouter({String initialLocation = '/scan'}) {
   );
 }
 
+/// Test notifier that returns denied permission (avoids platform channels).
+class _TestPermissionNotifier extends AsyncNotifier<PermissionStatus>
+    implements CameraPermissionNotifier {
+  @override
+  Future<PermissionStatus> build() async => PermissionStatus.denied;
+
+  @override
+  Future<void> requestPermission() async {}
+
+  @override
+  Future<void> recheckPermission() async {}
+}
+
 void main() {
+  Widget wrapWithProviderScope(Widget child) {
+    return ProviderScope(
+      overrides: [
+        cameraPermissionProvider.overrideWith(_TestPermissionNotifier.new),
+      ],
+      child: child,
+    );
+  }
+
   group('ScaffoldWithBottomNav', () {
     testWidgets('renders bottom navigation bar with 2 tabs', (tester) async {
       final router = createTestRouter();
       addTearDown(router.dispose);
 
       await tester.pumpWidget(
-        MaterialApp.router(routerConfig: router),
+        wrapWithProviderScope(
+          MaterialApp.router(routerConfig: router),
+        ),
       );
       await tester.pumpAndSettle();
 
@@ -60,7 +87,9 @@ void main() {
       addTearDown(router.dispose);
 
       await tester.pumpWidget(
-        MaterialApp.router(routerConfig: router),
+        wrapWithProviderScope(
+          MaterialApp.router(routerConfig: router),
+        ),
       );
       await tester.pumpAndSettle();
 
@@ -86,7 +115,9 @@ void main() {
       addTearDown(router.dispose);
 
       await tester.pumpWidget(
-        MaterialApp.router(routerConfig: router),
+        wrapWithProviderScope(
+          MaterialApp.router(routerConfig: router),
+        ),
       );
       await tester.pumpAndSettle();
 
@@ -106,7 +137,9 @@ void main() {
       addTearDown(router.dispose);
 
       await tester.pumpWidget(
-        MaterialApp.router(routerConfig: router),
+        wrapWithProviderScope(
+          MaterialApp.router(routerConfig: router),
+        ),
       );
       await tester.pumpAndSettle();
 
@@ -128,7 +161,9 @@ void main() {
       addTearDown(router.dispose);
 
       await tester.pumpWidget(
-        MaterialApp.router(routerConfig: router),
+        wrapWithProviderScope(
+          MaterialApp.router(routerConfig: router),
+        ),
       );
       await tester.pumpAndSettle();
 
@@ -149,7 +184,9 @@ void main() {
       addTearDown(router.dispose);
 
       await tester.pumpWidget(
-        MaterialApp.router(routerConfig: router),
+        wrapWithProviderScope(
+          MaterialApp.router(routerConfig: router),
+        ),
       );
       await tester.pumpAndSettle();
 

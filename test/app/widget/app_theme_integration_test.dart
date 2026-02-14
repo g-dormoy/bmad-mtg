@@ -4,9 +4,24 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mtg/app/widget/app.dart';
 import 'package:mtg/feature/collection/screens/collection_screen.dart';
+import 'package:mtg/feature/scanning/providers/camera_permission_provider.dart';
 import 'package:mtg/feature/scanning/screens/scan_screen.dart';
 import 'package:mtg/shared/constants/app_theme.dart';
 import 'package:mtg/shared/widget/scaffold_with_bottom_nav.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+/// Test notifier that returns denied permission (avoids platform channels).
+class _TestPermissionNotifier extends AsyncNotifier<PermissionStatus>
+    implements CameraPermissionNotifier {
+  @override
+  Future<PermissionStatus> build() async => PermissionStatus.denied;
+
+  @override
+  Future<void> requestPermission() async {}
+
+  @override
+  Future<void> recheckPermission() async {}
+}
 
 void main() {
   group('App Theme Integration', () {
@@ -60,11 +75,17 @@ void main() {
       addTearDown(router.dispose);
 
       await tester.pumpWidget(
-        MaterialApp.router(
-          theme: AppTheme.darkTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: ThemeMode.dark,
-          routerConfig: router,
+        ProviderScope(
+          overrides: [
+            cameraPermissionProvider
+                .overrideWith(_TestPermissionNotifier.new),
+          ],
+          child: MaterialApp.router(
+            theme: AppTheme.darkTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: ThemeMode.dark,
+            routerConfig: router,
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -82,7 +103,13 @@ void main() {
     testWidgets('actual App widget applies dark theme correctly',
         (tester) async {
       await tester.pumpWidget(
-        const ProviderScope(child: App()),
+        ProviderScope(
+          overrides: [
+            cameraPermissionProvider
+                .overrideWith(_TestPermissionNotifier.new),
+          ],
+          child: const App(),
+        ),
       );
       await tester.pumpAndSettle();
 
