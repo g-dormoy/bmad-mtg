@@ -5,27 +5,19 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mtg/feature/auth/repository/token_repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:mtg/shared/http/api_response.dart';
 import 'package:mtg/shared/http/app_exception.dart';
 import 'package:mtg/shared/http/interceptor/dio_connectivity_request_retrier.dart';
 import 'package:mtg/shared/http/interceptor/retry_interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-//part 'api_provider.g.dart';
-
 enum ContentType { urlEncoded, json }
 
-// @riverpod
-// ApiProvider apiProvider(ApiProviderRef ref) {
-//   return ApiProvider(ref);
-// }
-
-final apiProvider = Provider<ApiProvider>(ApiProvider.new);
+final apiProvider = Provider<ApiProvider>((_) => ApiProvider());
 
 class ApiProvider {
-  ApiProvider(this._ref) {
+  ApiProvider() {
     _dio = Dio();
     _dio.options.sendTimeout = const Duration(seconds: 5);
     _dio.options.connectTimeout = const Duration(seconds: 5);
@@ -48,12 +40,7 @@ class ApiProvider {
     }
   }
 
-  final Ref _ref;
-
   late Dio _dio;
-
-  late final TokenRepository _tokenRepository =
-      _ref.read(tokenRepositoryProvider);
 
   late String _baseUrl;
 
@@ -86,13 +73,8 @@ class ApiProvider {
         'accept': '*/*',
         'Content-Type': content,
       };
-      final _appToken = await _tokenRepository.fetchToken();
-      if (_appToken != null) {
-        headers['Authorization'] = 'Bearer ${_appToken}';
-      }
-      //Sometime for some specific endpoint it may require to use different Token
       if (token != null) {
-        headers['Authorization'] = 'Bearer ${token}';
+        headers['Authorization'] = 'Bearer $token';
       }
 
       final response = await _dio.post(
@@ -180,11 +162,6 @@ class ApiProvider {
       'accept': '*/*',
       'Content-Type': content,
     };
-
-    final _appToken = await _tokenRepository.fetchToken();
-    if (_appToken != null) {
-      headers['Authorization'] = 'Bearer ${_appToken}';
-    }
 
     try {
       final response = await _dio.get(
