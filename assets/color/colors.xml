@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryColor">#139960</color>
-    <color name="mlDarkGrey">#75787b</color>
-    <color name="mlMediumGrey">#a7a8aa</color>
-    <color name="lightGrey">#F7FAF9</color>
-    <color name="black">#212121</color>
-    <color name="error">#D80000</color>
-    <color name="inProgressYellow">#CC9233</color>
+    <!-- Dark Theme Colors -->
+    <color name="background">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="surfaceVariant">#2C2C2C</color>
+    <color name="onSurface">#FFFFFF</color>
+    <color name="onSurfaceVariant">#E0E0E0</color>
+    <color name="primary">#6750A4</color>
 
+    <!-- Semantic Colors -->
+    <color name="success">#4CAF50</color>
+    <color name="error">#CF6679</color>
+    <color name="warning">#FFB74D</color>
+
+    <!-- MTG Mana Colors -->
+    <color name="manaWhite">#F9FAF4</color>
+    <color name="manaBlue">#0E68AB</color>
+    <color name="manaBlack">#3D3D3D</color>
+    <color name="manaRed">#D32029</color>
+    <color name="manaGreen">#00733E</color>
+    <color name="manaColorless">#9E9E9E</color>
+    <color name="manaGold">#C9A227</color>
 </resources>
