@@ -52,7 +52,7 @@ development_status:
   epic-2: in-progress
   2-1-camera-viewfinder-with-frame-overlay: done
   2-2-ocr-text-extraction-service: done
-  2-3-scryfall-api-integration: backlog
+  2-3-scryfall-api-integration: done
   2-4-automatic-card-recognition: backlog
   2-5-scan-result-overlay: backlog
   2-6-add-card-to-collection: backlog
