@@ -99,11 +99,11 @@ void main() {
         (tester) async {
       await tester.pumpWidget(buildTestWidget(_testCard));
 
-      final container = tester.widget<Container>(
-        find.byType(Container).first,
+      final ink = tester.widget<Ink>(
+        find.byType(Ink).first,
       );
       final decoration =
-          container.decoration! as BoxDecoration;
+          ink.decoration! as BoxDecoration;
 
       // surfaceContainer (#1E1E1E) with 85% opacity
       expect(decoration.color?.a, closeTo(0.85, 0.01));

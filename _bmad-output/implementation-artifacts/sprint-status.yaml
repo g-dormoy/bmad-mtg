@@ -55,7 +55,7 @@ development_status:
   2-3-scryfall-api-integration: done
   2-4-automatic-card-recognition: done
   2-5-scan-result-overlay: done
-  2-6-add-card-to-collection: backlog
+  2-6-add-card-to-collection: done
   2-7-duplicate-detection-display: backlog
   2-8-session-counter: backlog
   2-9-session-summary: backlog
