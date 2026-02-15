@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mtg/feature/scanning/providers/camera_permission_provider.dart';
 import 'package:mtg/feature/scanning/screens/scan_screen.dart';
 import 'package:mtg/feature/scanning/widgets/camera_permission_denied.dart';
+import 'package:mtg/shared/util/platform_type.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -13,6 +14,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            platformTypeProvider.overrideWithValue(PlatformType.iOS),
             cameraPermissionProvider.overrideWith(
               _PendingPermissionNotifier.new,
             ),
@@ -32,6 +34,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            platformTypeProvider.overrideWithValue(PlatformType.iOS),
             cameraPermissionProvider.overrideWith(
               _DeniedPermissionNotifier.new,
             ),
@@ -51,6 +54,32 @@ void main() {
     });
 
     testWidgets(
+        'shows web unavailable message when platform is web',
+        (tester) async {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            platformTypeProvider.overrideWithValue(PlatformType.web),
+            cameraPermissionProvider.overrideWith(
+              _PendingPermissionNotifier.new,
+            ),
+          ],
+          child: const MaterialApp(
+            home: Scaffold(body: ScanScreen()),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(
+        find.text('Card scanning is not available on web'),
+        findsOneWidget,
+      );
+      expect(find.byType(CameraPermissionDenied), findsNothing);
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+    });
+
+    testWidgets(
         'shows loading indicator when permission is granted '
         '(camera controller initializing)', (tester) async {
       // When permission is granted, CameraViewfinder will try to
@@ -60,6 +89,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            platformTypeProvider.overrideWithValue(PlatformType.iOS),
             cameraPermissionProvider.overrideWith(
               _GrantedPermissionNotifier.new,
             ),

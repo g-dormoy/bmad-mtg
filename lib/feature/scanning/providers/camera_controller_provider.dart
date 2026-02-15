@@ -39,6 +39,7 @@ class CameraControllerNotifier
     final controller = CameraController(
       backCamera,
       ResolutionPreset.medium,
+      enableAudio: false,
       imageFormatGroup:
           defaultTargetPlatform == TargetPlatform.android
               ? ImageFormatGroup.nv21

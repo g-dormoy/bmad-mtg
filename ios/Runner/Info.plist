@@ -52,5 +52,9 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs camera access to scan Magic: The Gathering cards</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app may use the microphone during card scanning</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>

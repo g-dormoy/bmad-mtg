@@ -7,6 +7,7 @@ import 'package:mtg/feature/collection/screens/collection_screen.dart';
 import 'package:mtg/feature/scanning/providers/camera_permission_provider.dart';
 import 'package:mtg/feature/scanning/screens/scan_screen.dart';
 import 'package:mtg/shared/constants/app_theme.dart';
+import 'package:mtg/shared/util/platform_type.dart';
 import 'package:mtg/shared/widget/scaffold_with_bottom_nav.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -77,6 +78,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            platformTypeProvider.overrideWithValue(PlatformType.iOS),
             cameraPermissionProvider
                 .overrideWith(_TestPermissionNotifier.new),
           ],
@@ -105,6 +107,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            platformTypeProvider.overrideWithValue(PlatformType.iOS),
             cameraPermissionProvider
                 .overrideWith(_TestPermissionNotifier.new),
           ],

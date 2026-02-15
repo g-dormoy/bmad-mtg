@@ -6,6 +6,7 @@ import 'package:mtg/feature/scanning/providers/card_recognition_provider.dart';
 import 'package:mtg/feature/scanning/providers/frame_processor_provider.dart';
 import 'package:mtg/feature/scanning/widgets/camera_permission_denied.dart';
 import 'package:mtg/feature/scanning/widgets/camera_viewfinder.dart';
+import 'package:mtg/shared/util/platform_type.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// Main scan screen that manages camera permissions and
@@ -74,6 +75,11 @@ class _ScanScreenState extends ConsumerState<ScanScreen>
 
   @override
   Widget build(BuildContext context) {
+    final platform = ref.read(platformTypeProvider);
+    if (platform == PlatformType.web) {
+      return const _WebUnavailableView();
+    }
+
     final permissionAsync =
         ref.watch(cameraPermissionProvider);
 
@@ -99,6 +105,47 @@ class _ScanScreenState extends ConsumerState<ScanScreen>
         }
         return const CameraPermissionDenied();
       },
+    );
+  }
+}
+
+class _WebUnavailableView extends StatelessWidget {
+  const _WebUnavailableView();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.web_asset_off,
+              size: 64,
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'Card scanning is not available on web',
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: theme.colorScheme.onSurface,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Use the iOS or Android app to scan cards',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

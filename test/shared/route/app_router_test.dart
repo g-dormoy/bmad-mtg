@@ -5,6 +5,7 @@ import 'package:mtg/feature/collection/screens/collection_screen.dart';
 import 'package:mtg/feature/scanning/providers/camera_permission_provider.dart';
 import 'package:mtg/feature/scanning/screens/scan_screen.dart';
 import 'package:mtg/shared/route/app_router.dart';
+import 'package:mtg/shared/util/platform_type.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// Test notifier that returns denied permission (avoids platform channels).
@@ -26,6 +27,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            platformTypeProvider.overrideWithValue(PlatformType.iOS),
             cameraPermissionProvider
                 .overrideWith(_TestPermissionNotifier.new),
           ],
@@ -48,6 +50,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            platformTypeProvider.overrideWithValue(PlatformType.iOS),
             cameraPermissionProvider
                 .overrideWith(_TestPermissionNotifier.new),
           ],
