@@ -1,10 +1,12 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mtg/feature/scanning/models/recognition_state.dart';
 import 'package:mtg/feature/scanning/providers/camera_controller_provider.dart';
 import 'package:mtg/feature/scanning/providers/card_recognition_provider.dart';
 import 'package:mtg/feature/scanning/providers/frame_processor_provider.dart';
 import 'package:mtg/feature/scanning/widgets/card_frame_overlay.dart';
+import 'package:mtg/feature/scanning/widgets/scan_result_overlay.dart';
 
 /// Full-screen camera preview with the card frame overlay on
 /// top. Watches the recognition provider and frame processor
@@ -58,6 +60,11 @@ class CameraViewfinder extends ConsumerWidget {
           );
         }
 
+        final isRecognized = recognitionState.status ==
+            RecognitionStatus.recognized;
+        final recognizedCard =
+            recognitionState.recognizedCard;
+
         return Stack(
           children: [
             SizedBox.expand(
@@ -72,6 +79,23 @@ class CameraViewfinder extends ConsumerWidget {
             ),
             CardFrameOverlay(
               recognitionStatus: recognitionState.status,
+            ),
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: 24 +
+                  MediaQuery.of(context).padding.bottom,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                reverseDuration:
+                    const Duration(milliseconds: 150),
+                child: isRecognized && recognizedCard != null
+                    ? ScanResultOverlay(
+                        key: ValueKey(recognizedCard.id),
+                        card: recognizedCard,
+                      )
+                    : const SizedBox.shrink(),
+              ),
             ),
           ],
         );
